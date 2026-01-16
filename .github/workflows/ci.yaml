@@ -31,3 +31,11 @@ jobs:
         run: pip install --upgrade platformio
       - name: Lint PlatformIO Project
         run: pio check --fail-on-defect=high
+  format:
+    needs: [build, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: RafikFarhad/clang-format-github-action@v3
+        with:
+          sources: "src/**/*.h,src/**/*.c,test/**/*.c"
