@@ -19,4 +19,18 @@ jobs:
         
       - name: Build PlatformIO Project
         run: pio run
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run clang-tidy
+      uses: HorstBaerbel/action-clang-tidy@1.2
+      # These are optional (defaults displayed)
+      with:
+        scandir: './src'
+        builddir: 'build'
+        excludedirs: ''
+        extensions: 'c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
+        cmakeoptions: ''
     
