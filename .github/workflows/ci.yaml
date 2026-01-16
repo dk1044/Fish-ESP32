@@ -1,4 +1,4 @@
-name: PlatformIO Build
+name: CI Flow
 on: [push]
 jobs:
   build:
@@ -35,7 +35,10 @@ jobs:
     needs: [build, lint]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: RafikFarhad/clang-format-github-action@v3
+      - uses: actions/checkout@v4
+      - name: Run clang-format style check for C/C++/Protobuf programs.
+        uses: jidicula/clang-format-action@v4.16.0
         with:
-          sources: "src/**/*.h,src/**/*.c,test/**/*.c"
+          clang-format-version: '13'
+          check-path: 'src'
+          fallback-style: 'Mozilla' # optional
