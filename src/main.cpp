@@ -17,6 +17,7 @@
 #define HREF_GPIO_NUM     23
 #define PCLK_GPIO_NUM     22
 #define LIGHT_GPIO_NUM     4
+bool lightOn = false;
 
 #include <Arduino.h>
 #include "esp_camera.h"
