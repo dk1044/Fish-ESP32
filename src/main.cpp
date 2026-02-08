@@ -16,6 +16,7 @@
 #define VSYNC_GPIO_NUM    25
 #define HREF_GPIO_NUM     23
 #define PCLK_GPIO_NUM     22
+#define LIGHT_GPIO_NUM     4
 
 #include <Arduino.h>
 #include "esp_camera.h"
@@ -49,6 +50,16 @@ void handle_jpg_stream() {
     esp_camera_fb_return(fb);
     delay(30);
   }
+}
+
+void handle_light_on() {
+  digitalWrite(LIGHT_GPIO_NUM, HIGH);
+  server.send(200, "text/plain", "Light turned ON");
+}
+
+void handle_light_off() {
+  digitalWrite(LIGHT_GPIO_NUM, LOW);
+  server.send(200, "text/plain", "Light turned OFF");
 }
 
 void setup() {
@@ -93,6 +104,9 @@ void setup() {
     return;
   }
 
+  pinMode(LIGHT_GPIO_NUM, OUTPUT);
+  digitalWrite(LIGHT_GPIO_NUM, LOW);
+
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -103,6 +117,8 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   server.on("/stream", HTTP_GET, handle_jpg_stream);
+  server.on("/light/on", HTTP_GET, handle_light_on);
+  server.on("/light/off", HTTP_GET, handle_light_off);
   server.begin();
 }
 
