@@ -30,7 +30,7 @@ unsigned long streamEnableTime = 0;
 #define LIGHT_GPIO_NUM     4
 
 const char* ssid = "SKY67NSU";
-const char* password = "IUnDef45tEWU";
+const char* password = "Add Password";
 
 AsyncWebServer server(80);
 WiFiServer streamServer(81);
